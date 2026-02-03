@@ -2,5 +2,6 @@
   "input_dir": "inputs",
   "output_dir": "outputs",
   "algorithm": "prime_sieve",
-  "chunk_size": 1000000
+  "input_type": "one-file",
+  "input_separator": "\n"
 }
