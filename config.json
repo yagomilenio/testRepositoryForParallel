@@ -5,10 +5,10 @@
   "inputs": [
     {
       "name": "ranges",
-      "type": "TEXT",            // es un archivo de texto
-      "mode": "SINGLE_FILE",     // un solo fichero
-      "separator": "\n",         // separador de líneas
-      "pattern": "*.txt"         // opcional: filtramos solo archivos txt
+      "type": "TEXT",           
+      "mode": "SINGLE_FILE",    
+      "separator": "\n",       
+      "pattern": "*.txt"      
     }
   ]
 }
