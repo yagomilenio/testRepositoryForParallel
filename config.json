@@ -1,7 +1,14 @@
 {
+  "algorithm": "prime_sieve",
   "input_dir": "inputs",
   "output_dir": "outputs",
-  "algorithm": "prime_sieve",
-  "input_type": "one-file",
-  "input_separator": "\n"
+  "inputs": [
+    {
+      "name": "ranges",
+      "type": "TEXT",            // es un archivo de texto
+      "mode": "SINGLE_FILE",     // un solo fichero
+      "separator": "\n",         // separador de líneas
+      "pattern": "*.txt"         // opcional: filtramos solo archivos txt
+    }
+  ]
 }
