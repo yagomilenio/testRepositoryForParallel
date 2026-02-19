@@ -43,7 +43,7 @@ Este comando:
 ### Ejecución Básica
 
 ```bash
-make run START_INDEX=0 END_INDEX=4
+make run START=0 END=4
 ```
 
 Esto procesará los rangos de la línea 0 a la 4 del archivo `inputs/ranges.txt`.
@@ -54,33 +54,33 @@ Esto procesará los rangos de la línea 0 a la 4 del archivo `inputs/ranges.txt`
 
 Terminal 1:
 ```bash
-make run START_INDEX=0 END_INDEX=4
+make run START=0 END=4
 ```
 
 Terminal 2:
 ```bash
-make run START_INDEX=5 END_INDEX=9
+make run START=5 END=9
 ```
 
 Terminal 3:
 ```bash
-make run START_INDEX=10 END_INDEX=14
+make run START=10 END=14
 ```
 
 #### Opción 2: Background jobs en bash
 
 ```bash
-make run START_INDEX=0 END_INDEX=4 &
-make run START_INDEX=5 END_INDEX=9 &
-make run START_INDEX=10 END_INDEX=14 &
-make run START_INDEX=15 END_INDEX=19 &
+make run START=0 END=4 &
+make run START=5 END=9 &
+make run START=10 END=14 &
+make run START=15 END=19 &
 wait
 ```
 
 #### Opción 3: GNU Parallel (si está instalado)
 
 ```bash
-seq 0 4 19 | parallel -j4 'make run START_INDEX={} END_INDEX=$$(({}+4))'
+seq 0 4 19 | parallel -j4 'make run START={} END=$$(({}+4))'
 ```
 
 ## Formato de Entrada
@@ -163,15 +163,15 @@ make test
 
 ### Procesar todo en serie
 ```bash
-make run START_INDEX=0 END_INDEX=19
+make run START_INDEX=0 END=19
 ```
 
 ### Dividir en 4 partes paralelas
 ```bash
-make run START_INDEX=0 END_INDEX=4 &
-make run START_INDEX=5 END_INDEX=9 &
-make run START_INDEX=10 END_INDEX=14 &
-make run START_INDEX=15 END_INDEX=19 &
+make run START=0 END=4 &
+make run START=5 END=9 &
+make run START=10 END=14 &
+make run START=15 END=19 &
 wait
 echo "Todos los procesos completados"
 ```
