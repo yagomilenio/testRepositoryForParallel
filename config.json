@@ -1,14 +1,10 @@
 {
-  "algorithm": "prime_sieve",
-  "input_dir": "inputs",
   "output_dir": "outputs",
   "inputs": [
     {
-      "name": "ranges",
-      "type": "TEXT",           
-      "mode": "SINGLE_FILE",    
-      "separator": "\n",       
-      "pattern": "*.txt"      
+      "type": "RANGE",           
+      "start": 1,       
+      "end": 2000000      
     }
   ]
 }
