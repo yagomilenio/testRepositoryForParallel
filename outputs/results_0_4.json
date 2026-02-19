@@ -1,0 +1,13 @@
+{
+  "range": [
+    0,
+    4
+  ],
+  "primes_count": 2,
+  "primes": [
+    2,
+    3
+  ],
+  "computation_time": 0.0663001537322998,
+  "workers_used": 16
+}
