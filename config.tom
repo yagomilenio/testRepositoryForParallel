@@ -1,0 +1,20 @@
+[requirements]
+packages = []  
+
+[inputs]
+type = "range_continuous"
+
+[inputs.range_continuous]
+start = 1
+end   = 20000000000
+step  = 1
+
+[runner]
+command    = "python calculate.py"
+arg_start  = "--start"
+arg_end    = "--end"
+extra_args = ""
+
+[outputs]
+dir              = "outputs"
+filename_pattern = "results_{start}_{end}.json"
