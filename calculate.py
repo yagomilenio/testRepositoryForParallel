@@ -13,11 +13,6 @@ from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
-def load_config():
-    """Carga la configuración desde config.json"""
-    with open('config.json', 'r') as f:
-        return json.load(f)
-
 
 def simple_sieve(n):
     """Criba simple para números pequeños (para obtener primos base)"""
@@ -139,8 +134,7 @@ def main():
     start = int(sys.argv[1])
     end = int(sys.argv[2])
 
-    config = load_config()
-    output_dir = config['output_dir']
+    output_dir = "outputs"
 
     print(f"Procesando rango {start:,} a {end:,}\n")
     process_input_range(start, end, output_dir)
