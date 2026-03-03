@@ -27,7 +27,7 @@ setup:
 	@echo "✓ No se requieren paquetes adicionales para este proyecto"
 	@echo "✓ Verificando estructura de directorios..."
 	@mkdir -p inputs outputs
-	@test -f config.json || (echo "Error: config.json no encontrado" && exit 1)
+	@test -f config.toml || (echo "Error: config.toml no encontrado" && exit 1)
 	@echo "✓ Configuración verificada"
 	@echo ""
 	@echo "Instalación completada exitosamente!"
