@@ -1,4 +1,4 @@
-.PHONY: install run clean help
+.PHONY: setup run clean help
 # Variables
 PYTHON := python3
 SCRIPT := calculate.py
@@ -10,7 +10,7 @@ help:
 	@echo "==================================================="
 	@echo ""
 	@echo "Targets disponibles:"
-	@echo "  make install              - Instala dependencias necesarias"
+	@echo "  make setup              - Instala dependencias necesarias"
 	@echo "  make run START=N END=M - Ejecuta el cálculo para rangos N a M"
 	@echo "  make clean                - Limpia los archivos de salida"
 	@echo "  make test                 - Ejecuta una prueba rápida"
@@ -20,7 +20,7 @@ help:
 	@echo "  make run START=0 END=4"
 	@echo "  make run START=5 END=9"
 	@echo ""
-install:
+setup:
 	@echo "Instalando dependencias..."
 	@which $(PYTHON) > /dev/null || (echo "Error: Python 3 no está instalado" && exit 1)
 	@echo "✓ Python 3 está instalado"
