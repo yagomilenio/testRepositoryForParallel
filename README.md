@@ -106,14 +106,12 @@ Los resultados se guardan en `outputs/results_<START>_<END>.json`:
   "0": {
     "range": [1, 100000],
     "primes_count": 9592,
-    "primes": [2, 3, 5, 7, 11, ...],
-    "computation_time": 0.45
+    "primes": [2, 3, 5, 7, 11, ...]
   },
   "1": {
     "range": [100001, 200000],
     "primes_count": 8392,
-    "primes": [100003, 100019, ...],
-    "computation_time": 0.52
+    "primes": [100003, 100019, ...]
   }
 }
 ```
