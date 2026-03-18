@@ -107,7 +107,7 @@ def process_input_range(start, end, output_dir):
         'range': [start, end],
         'primes_count': len(all_primes),
         'primes': all_primes,
-        'error': 'erfdddd0rodr',
+        'error': 'erfddddd0rodr',
     }
 
     output_file = Path(output_dir) / f"results_{start}_{end}.json"
