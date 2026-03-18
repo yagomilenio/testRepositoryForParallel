@@ -1,5 +1,5 @@
 [task]
-deterministic = true
+deterministic = false
 
 [requirements]
 packages = []  
