@@ -1,6 +1,6 @@
 # Calculadora de Números Primos - Paralelizable
 
-Este proyecto implementa un algoritmo de cálculo pesado (Criba de Eratóstenes) diseñado para ser paralelizado. Es ideal para pruebas de paralelización y procesamiento distribuido.
+Este proyecto implementa un algoritmo de cálculo pesado (Criba de Eratóstenes) diseñado para ser paralelizado.  Es ideal para pruebas de paralelización y procesamiento distribuido.
 
 ## Estructura del Proyecto
 
