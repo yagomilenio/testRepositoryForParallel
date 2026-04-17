@@ -1,179 +1,121 @@
-# Calculadora de Números Primos - Paralelizable
+# Calculadora de Números Primos en Paralelo
+[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/yagomilenio/testRepositoryForParallel)
+Este repositorio contiene una calculadora de números primos computacionalmente intensiva, diseñada para ser fácilmente paralelizable. Utiliza el algoritmo de la Criba de Eratóstenes segmentada, lo que lo convierte en un benchmark ideal para pruebas de procesamiento paralelo y distribuido.
 
-Este proyecto implementa un algoritmo de cálculo pesado (Criba de Eratóstenes) diseñado para ser paralelizado.  Es ideal para pruebas de paralelización y procesamiento distribuido.
+El script principal, `calculate.py`, encuentra todos los números primos dentro de un rango numérico dado. La arquitectura está diseñada para permitir que múltiples instancias de este script se ejecuten concurrentemente sobre rangos distintos, habilitando un paralelismo simple de grano grueso.
 
 ## Estructura del Proyecto
 
 ```
-prime-calculator/
-├── config.json          # Configuración del proyecto
-├── Makefile            # Automatización de tareas
-├── calculate.py        # Script principal de cálculo
-├── README.md           # Esta documentación
-├── inputs/             # Archivos de entrada
-│   └── ranges.txt      # Rangos de números para procesar
-└── outputs/            # Resultados parciales (generados automáticamente)
-    └── results_*.json  # Archivos de resultados por rango
+.
+├── Makefile          # Tareas de automatización (run, test, clean)
+├── calculate.py      # El script principal de cálculo de primos
+├── config.toml       # Archivo de configuración de la tarea
+├── QUICKSTART.md     # Guía de inicio rápido
+└── outputs/          # Directorio para los archivos de resultados generados
+    └── (archivos generados)
 ```
 
-## Configuración (config.json)
+## Cómo Funciona
 
-```json
-{
-  "input_dir": "inputs",       # Directorio de archivos de entrada
-  "output_dir": "outputs",     # Directorio de salida
-  "algorithm": "prime_sieve",  # Algoritmo utilizado
-  "chunk_size": 1000000        # Tamaño de chunk por defecto
-}
-```
+El script `calculate.py` implementa el algoritmo de la **Criba de Eratóstenes**. Está optimizado para trabajar sobre segmentos específicos (p. ej., del 1 al 1.000.000).
 
-## Instalación
+- **Paralelismo Intra-script**: Para una sola ejecución, el script utiliza `concurrent.futures.ProcessPoolExecutor` de Python para distribuir el cálculo de un rango dado entre todos los núcleos de CPU disponibles.
+- **Paralelismo Inter-script**: El uso previsto es ejecutar múltiples instancias del script con distintos rangos de forma simultánea. Esto permite dividir la carga de trabajo entre diferentes máquinas o procesos.
+
+## Configuración
+
+El proyecto requiere Python 3. Para preparar el entorno, simplemente ejecuta:
 
 ```bash
-make install
+make setup
 ```
 
-Este comando:
-- Verifica que Python 3 esté instalado
-- Verifica la estructura de directorios
-- Valida la configuración
+Este comando verificará que Python 3 está instalado y creará el directorio `outputs` necesario. No se requieren paquetes externos.
 
 ## Uso
 
-### Ejecución Básica
+### Ejecución Simple
+
+Para calcular los primos de un rango numérico específico, usa el comando `make run` indicando los valores `START` y `END`.
 
 ```bash
-make run START=0 END=4
+# Ejemplo: Calcular primos del 1 al 1.000.000
+make run START=1 END=1000000
 ```
 
-Esto procesará los rangos de la línea 0 a la 4 del archivo `inputs/ranges.txt`.
+Los resultados se guardarán en `outputs/results_1_1000000.json`.
 
-### Paralelización
+### Ejecución en Paralelo
 
-#### Opción 1: Múltiples terminales
+La característica principal de este repositorio es su capacidad de paralelizarse ejecutando múltiples trabajos. Aquí hay algunas formas de lograrlo:
 
-Terminal 1:
+#### 1. Múltiples Terminales
+
+Puedes dividir la carga manualmente ejecutando distintos comandos en ventanas de terminal separadas.
+
+**Terminal 1:**
 ```bash
-make run START=0 END=4
+make run START=1 END=1000000
 ```
 
-Terminal 2:
+**Terminal 2:**
 ```bash
-make run START=5 END=9
+make run START=1000001 END=2000000
 ```
 
-Terminal 3:
+**Terminal 3:**
 ```bash
-make run START=10 END=14
+make run START=2000001 END=3000000
 ```
 
-#### Opción 2: Background jobs en bash
+#### 2. Jobs en Segundo Plano con Bash
+
+Usa comandos de shell para ejecutar múltiples procesos en segundo plano y esperar a que todos terminen.
 
 ```bash
-make run START=0 END=4 &
-make run START=5 END=9 &
-make run START=10 END=14 &
-make run START=15 END=19 &
+make run START=1 END=1000000 &
+make run START=1000001 END=2000000 &
+make run START=2000001 END=3000000 &
+make run START=3000001 END=4000000 &
 wait
+echo "All processes completed."
 ```
 
-#### Opción 3: GNU Parallel (si está instalado)
+#### 3. GNU Parallel
+
+Si tienes `GNU Parallel` instalado, puedes distribuir fácilmente el trabajo entre múltiples núcleos con un solo comando.
 
 ```bash
-seq 0 4 19 | parallel -j4 'make run START={} END=$$(({}+4))'
+# Este comando ejecuta 4 trabajos en paralelo, cada uno procesando un rango de 1 millón de números.
+# Procesa números del 0 al 4 millones.
+seq 0 1000000 3000000 | parallel -j4 'make run START={} END=$(({}+999999))'
 ```
 
-## Formato de Entrada
+## Comandos del Makefile
 
-El archivo `inputs/ranges.txt` contiene rangos en formato CSV:
-
-```
-inicio,fin
-1,100000
-100001,200000
-200001,300000
-...
-```
-
-Cada línea representa un rango de números donde buscar primos.
+- `make setup`: Prepara el entorno.
+- `make run START=<num> END=<num>`: Ejecuta el cálculo de primos para el rango especificado.
+- `make test`: Ejecuta un caso de prueba pequeño y rápido (calcula primos del 0 al 2).
+- `make clean`: Elimina todos los archivos generados del directorio `outputs`.
+- `make parallel-example`: Muestra ejemplos de cómo ejecutar el script en paralelo.
+- `make help`: Muestra un mensaje de ayuda con todos los targets disponibles.
 
 ## Formato de Salida
 
-Los resultados se guardan en `outputs/results_<START>_<END>.json`:
+El script genera un archivo JSON por cada ejecución en el directorio `outputs/`, con el nombre `results_<START>_<END>.json`. El archivo contiene el rango procesado, el total de primos encontrados y una lista con los propios primos.
 
+Ejemplo `outputs/results_0_4.json`:
 ```json
 {
-  "0": {
-    "range": [1, 100000],
-    "primes_count": 9592,
-    "primes": [2, 3, 5, 7, 11, ...]
-  },
-  "1": {
-    "range": [100001, 200000],
-    "primes_count": 8392,
-    "primes": [100003, 100019, ...]
-  }
+  "range": [
+    0,
+    4
+  ],
+  "primes_count": 2,
+  "primes": [
+    2,
+    3
+  ]
 }
 ```
-
-## Algoritmo
-
-El proyecto utiliza la **Criba de Eratóstenes por segmentos**, que es:
-- **Computacionalmente pesado**: Requiere cálculo intensivo para rangos grandes
-- **Fácilmente paralelizable**: Cada rango es independiente
-- **Eficiente**: O(n log log n) por segmento
-
-## Comandos Adicionales
-
-```bash
-make help              # Muestra ayuda
-make test              # Ejecuta una prueba rápida
-make clean             # Limpia archivos de salida
-make parallel-example  # Muestra ejemplos de paralelización
-```
-
-## Rendimiento
-
-En un sistema moderno, cada rango de 100,000 números tarda aproximadamente:
-- 0.1 - 0.5 segundos para rangos pequeños (< 1M)
-- 0.5 - 2 segundos para rangos medios (1M - 10M)
-- 2+ segundos para rangos grandes (> 10M)
-
-La paralelización puede reducir el tiempo total significativamente según el número de núcleos disponibles.
-
-## Personalización
-
-Para cambiar los rangos a procesar, edita `inputs/ranges.txt`:
-
-```bash
-# Ejemplo: rangos más grandes para más carga
-10000000,11000000
-11000000,12000000
-12000000,13000000
-```
-
-## Ejemplos de Uso
-
-### Prueba rápida
-```bash
-make test
-```
-
-### Procesar todo en serie
-```bash
-make run START_INDEX=0 END=19
-```
-
-### Dividir en 4 partes paralelas
-```bash
-make run START=0 END=4 &
-make run START=5 END=9 &
-make run START=10 END=14 &
-make run START=15 END=19 &
-wait
-echo "Todos los procesos completados"
-```
-
-## Licencia
-
-MIT
