@@ -1,5 +1,5 @@
 # Calculadora de Números Primos en Paralelo
-[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/yagomilenio/testRepositoryForParallel)
+
 Este repositorio contiene una calculadora de números primos computacionalmente intensiva, diseñada para ser fácilmente paralelizable. Utiliza el algoritmo de la Criba de Eratóstenes segmentada, lo que lo convierte en un benchmark ideal para pruebas de procesamiento paralelo y distribuido.
 
 El script principal, `calculate.py`, encuentra todos los números primos dentro de un rango numérico dado. La arquitectura está diseñada para permitir que múltiples instancias de este script se ejecuten concurrentemente sobre rangos distintos, habilitando un paralelismo simple de grano grueso.
