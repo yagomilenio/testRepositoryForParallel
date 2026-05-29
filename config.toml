@@ -9,7 +9,7 @@ type = "range_continuous"
 
 [inputs.range_continuous]
 start = 1
-end   = 2000000000
+end   = 20000000000
 step  = 1
 
 [outputs]
